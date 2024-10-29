@@ -1,7 +1,13 @@
 import { redirect } from "next/navigation";
 import { supabase } from "../utils/supabaseClient";
 
-export async function GET({ params }) {
+export async function GET(request, { params }) {
+
+    if (!params || !params.shortId) {
+        console.error('params is undefined or shortId is missing')
+        return new Response('URL not found', { status: 404 })
+    }
+
     const { shortId } = params
     
     const { data, error } = await supabase
@@ -11,8 +17,9 @@ export async function GET({ params }) {
         .single()
 
     if (error || !data) {
+        console.error('Error fetching URL: ', error)
         return new Response('URL not found', { status: 404 })
     }
-    
-    redirect(data.original_url)
+
+    return redirect(data.original_url)
 }
