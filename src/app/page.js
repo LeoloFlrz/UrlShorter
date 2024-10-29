@@ -15,6 +15,13 @@ export default function Home() {
     })
 
     const data = await response.json()
+
+    if (!response.ok) {
+      console.error('Error al acortar la URL: ', data.error || 'Unknown error')
+      alert('Error al acortar la URL')
+      return
+    }
+
     if (data.shortUrl) setShortUrl(data.shortUrl)
   }
 
