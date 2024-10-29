@@ -8,6 +8,8 @@ export async function GET(request, { params }) {
         return new Response('URL not found', { status: 404 })
     }
 
+    console.log(params)
+
     const { shortId } = params
     
     const { data, error } = await supabase
