@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [url, setUrl] = useState('')
-  const [shortUrl, setShortUrl] = useState('')
+  const [short_url, setShortUrl] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -22,7 +22,7 @@ export default function Home() {
       return
     }
 
-    if (data.shortUrl) setShortUrl(data.shortUrl)
+    if (data.short_url) setShortUrl(data.short_url)
   }
 
   return (
@@ -39,7 +39,7 @@ export default function Home() {
           />
           <button type="submit">Acortar</button>
         </form>
-        {shortUrl && <p>URL Acortada: <a href={shortUrl}>{shortUrl}</a></p>}
+        {short_url && <p>URL Acortada: <a href={short_url}>{short_url}</a></p>}
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         
