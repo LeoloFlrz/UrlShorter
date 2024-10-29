@@ -1,9 +1,31 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "./utils/supabaseClient";
+import Navbar from "./components/Navbar";
+import UrlList from "./components/UrlList";
 
 export default function Home() {
   const [url, setUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const session = supabase.auth.getSession()
+    setUser(session.user)
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user || null)
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +53,7 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <Navbar user={user} onLogout={handleLogout}/>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-lg p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-center">Acortador de links</h1>
         <form onSubmit={handleSubmit} className="flex items-center gap-2">
@@ -54,6 +77,10 @@ export default function Home() {
             URL Acortada: <a className="text-blue-500 hover:underline" href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
           </p>
         )}
+
+        <div>
+          <UrlList user={user}/>
+        </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
       </footer>

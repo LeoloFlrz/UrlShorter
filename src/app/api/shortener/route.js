@@ -8,7 +8,7 @@ export async function POST(request) {
     const shortId = generateShortId()
 
     const { data, error } = await supabase.from('urls').insert([
-        { original_url: url, short_id: shortId},
+        { original_url: url, short_id: shortId, user_id: user.id},
     ])
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
