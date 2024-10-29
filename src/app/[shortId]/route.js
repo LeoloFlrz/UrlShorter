@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
     const { data, error } = await supabase
         .from('urls')
         .select('original_url')
-        .eq('shortId', shortId)
+        .eq('short_id', shortId)
         .single()
 
     if (error || !data) {
