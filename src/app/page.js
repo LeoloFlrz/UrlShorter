@@ -8,7 +8,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('URL a acortar:', url); // Agrega este log para depurar
+    console.log('URL a acortar:', url);
 
     const response = await fetch('/api/shortener', {
       method: 'POST',
@@ -17,7 +17,6 @@ export default function Home() {
     });
 
     const data = await response.json();
-    console.log('Respuesta del servidor:', data); // Agrega este log para depurar
 
     if (!response.ok) {
       console.error('Error al acortar la URL:', data.error || 'Unknown error');
