@@ -2,28 +2,33 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [url, setUrl] = useState('')
-  const [short_url, setShortUrl] = useState('')
+  const [url, setUrl] = useState('');
+  const [shortUrl, setShortUrl] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const response = await fetch('api/shortener', {
+    console.log('URL a acortar:', url); // Agrega este log para depurar
+
+    const response = await fetch('/api/shortener', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url }),
-    })
+    });
 
-    const data = await response.json()
+    const data = await response.json();
+    console.log('Respuesta del servidor:', data); // Agrega este log para depurar
 
     if (!response.ok) {
-      console.error('Error al acortar la URL: ', data.error || 'Unknown error')
-      alert('Error al acortar la URL')
-      return
+      console.error('Error al acortar la URL:', data.error || 'Unknown error');
+      alert('Error al acortar la URL');
+      return;
     }
 
-    if (data.short_url) setShortUrl(data.short_url)
-  }
+    if (data.shortUrl) {
+      setShortUrl(data.shortUrl);
+    }
+  };
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -39,10 +44,9 @@ export default function Home() {
           />
           <button type="submit">Acortar</button>
         </form>
-        {short_url && <p>URL Acortada: <a href={short_url}>{short_url}</a></p>}
+        {shortUrl && <p>URL Acortada: <a href={shortUrl}>{shortUrl}</a></p>}
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        
       </footer>
     </div>
   );

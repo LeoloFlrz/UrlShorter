@@ -13,5 +13,5 @@ export async function POST(request) {
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-    return NextResponse.json({ short_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${shortId}` })
+    return NextResponse.json({ shortUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/${shortId}` })
 }
