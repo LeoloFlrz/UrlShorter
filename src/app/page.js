@@ -25,6 +25,7 @@ export default function Home() {
   const handleLogout = async () => {
     await supabase.auth.signOut()
     setUser(null)
+    alert('Logged out correctly')
   }
 
   const handleSubmit = async (e) => {
