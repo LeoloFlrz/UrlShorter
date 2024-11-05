@@ -5,11 +5,11 @@ export async function GET(request, { params }) {
   const { shortId } = await params;
 
   if (!shortId) {
-    console.error('missing short id')
-    return new Response('URL not found', { status: 404 })
+    console.error("missing short id");
+    return new Response("URL not found", { status: 404 });
   }
 
-  console.log('Fetching url for short id:', shortId)
+  console.log("Fetching url for short id:", shortId);
 
   const { data, error } = await supabase
     .from("urls")
@@ -24,14 +24,13 @@ export async function GET(request, { params }) {
     return new Response("URL not found", { status: 404 });
   }
 
-  const redirectUrl = data.original_url
+  const redirectUrl = data.original_url;
 
   console.log("Redirecting to:", redirectUrl);
-//   return redirect(redirectUrl, 302);
-return new Response(null, {
+  return new Response(null, {
     status: 302,
     headers: {
-        Location: redirectUrl
-    }
-})
+      Location: redirectUrl,
+    },
+  });
 }

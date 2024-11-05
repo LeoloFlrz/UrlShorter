@@ -22,6 +22,6 @@ export async function POST(request) {
   }
 
   return NextResponse.json({
-    shortUrl: `${process.env.NEXT_PUBLIC_BASE_URL}${shortId}`,
+    shortUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/${shortId}`,
   });
 }
