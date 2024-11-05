@@ -49,6 +49,7 @@ export default function Home() {
 
     if (data.shortUrl) {
       setShortUrl(data.shortUrl);
+      console.log('Url Acortada: ', shortUrl)
     }
   };
 
