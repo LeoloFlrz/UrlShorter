@@ -7,11 +7,16 @@ import UrlList from "./components/UrlList";
 export default function Home() {
   const [url, setUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const session = supabase.auth.getSession()
-    setUser(session.user)
+
+    const fetchSession = async () => {
+      const { data: sessionData } = await supabase.auth.getSession()
+      setUser(sessionData?.session?.user || null)
+    }
+
+    fetchSession()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user || null)
@@ -20,6 +25,17 @@ export default function Home() {
     return () => {
       subscription.unsubscribe()
     }
+    
+    // const session = supabase.auth.getSession()
+    // setUser(session.user)
+
+    // const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+    //   setUser(session?.user || null)
+    // })
+
+    // return () => {
+    //   subscription.unsubscribe()
+    // }
   }, [])
 
   const handleLogout = async () => {
@@ -32,11 +48,14 @@ export default function Home() {
     e.preventDefault();
 
     console.log('URL a acortar:', url);
+    console.log('Usuario actual:', user)
 
     const response = await fetch('/api/shortener', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url }),
+      body: JSON.stringify({ 
+        url,
+        user_id: user ? user.id : null }),
     });
 
     const data = await response.json();
@@ -47,9 +66,11 @@ export default function Home() {
       return;
     }
 
+    console.log(data)
+
     if (data.shortUrl) {
       setShortUrl(data.shortUrl);
-      console.log('Url Acortada: ', shortUrl)
+      console.log(`Url acortada: ${shortUrl}`)
     }
   };
 
@@ -80,8 +101,9 @@ export default function Home() {
           </p>
         )}
 
-        <div>
-          <UrlList user={user}/>
+        <div>{user && <UrlList user={user}/>
+          }
+          
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
