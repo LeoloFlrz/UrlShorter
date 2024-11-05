@@ -26,6 +26,12 @@ const Login = () => {
     };
   }, []);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+    alert('Logged out correctly')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,7 +60,7 @@ const Login = () => {
       <Navbar />
 
       <main className="flex items-center justify-center">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onLogout={handleLogout}>
           <input
             type="email"
             value={email}

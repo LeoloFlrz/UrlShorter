@@ -25,6 +25,12 @@ const Register = () => {
     }
   }, [])
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+    alert('Logged out correctly')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,7 +61,7 @@ const Register = () => {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Navbar user={user}/>
+      <Navbar user={user} onLogout={handleLogout}/>
       <main>
         <div className="flex items-center justify-center">
           <form onSubmit={handleSubmit}>
