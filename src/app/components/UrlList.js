@@ -34,7 +34,7 @@ const UrlList = ({ user }) => {
           <tbody>
             {urls.map((url) => (
               <tr key={url.short_id} className="border-b border-gray-200">
-                <td className="p-2 border-r border-gray-200">
+                <td className="p-6 border-r border-gray-200">
                   <a
                     href={url.original_url}
                     target="_blank"
@@ -44,8 +44,8 @@ const UrlList = ({ user }) => {
                     {url.original_url}
                   </a>
                 </td>
-                <td className="p-2 border-r border-gray-200">{`${window.location.origin}/${url.short_id}`}</td>
-                <td className="p-2">
+                <td className="p-6 border-r border-gray-200">{`${window.location.origin}/${url.short_id}`}</td>
+                <td className="p-6">
                   <a
                     href={`/${url.short_id}`}
                     target="_blank"
