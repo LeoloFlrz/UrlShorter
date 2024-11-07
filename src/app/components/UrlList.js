@@ -22,13 +22,19 @@ const UrlList = ({ user }) => {
   return (
     <div className="flex items-center justify-center mt-10">
       <div className="w-full max-w-4x1 rounded p-6">
-        <h2 className="text-center text-lg font-semibold mb-4">Mis URLs Acortadas</h2>
+        <h2 className="text-center text-lg font-semibold mb-4">
+          Mis URLs Acortadas
+        </h2>
         <table className="w-full border-collapse">
           <thead>
             <tr className="border-b border-gray-300">
-              <th className="p-2 border-r border-gray-300 text-left">Link original</th>
-              <th className="p-2 border-r border-gray-300 text-left">Link acortado</th>
-              <th className="p-2 text-left">Acceder</th>
+              <th className="p-2 border-r border-gray-300 text-left">
+                Link original
+              </th>
+              <th className="p-2 border-r border-gray-300 text-left">
+                Link acortado
+              </th>
+              <th className="p-2 text-left">Acceso</th>
             </tr>
           </thead>
           <tbody>
@@ -59,15 +65,6 @@ const UrlList = ({ user }) => {
             ))}
           </tbody>
         </table>
-        {/* <ul>
-        {urls.map((url) => (
-          <button className="bg-blue-900 rounded m-2 p-1">
-            <li key={url.short_id}>
-              <a href={url.original_url}>{url.original_url}</a> - {url.short_id}
-            </li>
-          </button>
-        ))}
-      </ul> */}
       </div>
     </div>
   );
