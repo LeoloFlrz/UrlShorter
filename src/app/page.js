@@ -128,9 +128,9 @@ export default function Home() {
             </div>
           )}
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center mt-5">
             <button
-              className="m-5 rounded bg-green-700 p-3 transition duration-500 hover:bg-green-800"
+              className=" mr-5 rounded bg-green-700 p-3 transition duration-500 hover:bg-green-800"
               type="button"
               onClick={() => setShowCustomInput(!showCustomInput)}
             >
