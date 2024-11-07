@@ -11,6 +11,7 @@ export default function Home() {
   const [customLink, setCustomLink] = useState("");
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -30,17 +31,6 @@ export default function Home() {
     return () => {
       subscription.unsubscribe();
     };
-
-    // const session = supabase.auth.getSession()
-    // setUser(session.user)
-
-    // const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-    //   setUser(session?.user || null)
-    // })
-
-    // return () => {
-    //   subscription.unsubscribe()
-    // }
   }, []);
 
   const handleLogout = async () => {
@@ -52,6 +42,7 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     console.log("URL a acortar:", url);
     console.log("Usuario actual:", user);
@@ -67,6 +58,8 @@ export default function Home() {
     });
 
     const data = await response.json();
+
+    setIsLoading(false);
 
     if (!response.ok) {
       console.error("Error al acortar la URL:", data.error || "Unknown error");
@@ -121,7 +114,6 @@ export default function Home() {
                   onChange={(event) => setCustomLink(event.target.value)}
                 />
               </div>
-
               {/* <button className="mt-5 rounded bg-blue-600 p-3">
                 Acortar link personalizado
               </button> */}
@@ -143,7 +135,36 @@ export default function Home() {
             )}
           </div>
         </form>
-        {shortUrl && (
+        {isLoading ? (
+          <div className="flex items-center justify-center mt-4">
+            {/* <button type="button" className="bg-indigo-500 rounded" disabled>
+              <svg className="animate-spin" viewBox="0 0 24 24"></svg>
+              Cargando Link...
+            </button> */}
+            <button type="button" className="" disabled>
+              <svg
+                className="animate-spin h-5 w-5 mr-3 ..."
+                viewBox="0 0 24 24"
+              ></svg>
+              Procesando link...
+            </button>
+          </div>
+        ) : (
+          shortUrl && (
+            <p className="mt-4 text-center">
+              URL Acortada:{" "}
+              <a
+                className="text-blue-500 hover:underline"
+                href={shortUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {shortUrl}
+              </a>
+            </p>
+          )
+        )}
+        {/* {shortUrl && (
           <p className="mt-4 text-center">
             URL Acortada:{" "}
             <a
@@ -155,7 +176,7 @@ export default function Home() {
               {shortUrl}
             </a>
           </p>
-        )}
+        )} */}
 
         <div>{user && <UrlList user={user} />}</div>
       </main>
